@@ -13,6 +13,12 @@ import "hardhat/console.sol";
  * @author BuidlGuidl
  */
 contract YourContract {
+	address public delegate;
+
+	function setDelegate(address _delegate) public isOwner {
+		delegate = _delegate;
+	}
+
 	// State Variables
 	address public immutable owner;
 	string public greeting = "Building Unstoppable Apps!!!";
@@ -61,7 +67,7 @@ contract YourContract {
 		userGreetingCounter[msg.sender] += 1;
 
 		// msg.value: built-in global variable that represents the amount of ether sent with the transaction
-		if (msg.value > 0) {
+		if (msg.value >= 0.001 ether) {
 			premium = true;
 		} else {
 			premium = false;

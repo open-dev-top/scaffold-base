@@ -4,24 +4,74 @@ import Link from "next/link";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { Address } from "~~/components/scaffold-eth";
+import { Address, AddressInput } from "~~/components/scaffold-eth";
+import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
+import { useState } from "react";
 
 const Home: NextPage = () => {
   const { address: connectedAddress } = useAccount();
+
+  const { data: delegate } = useScaffoldReadContract({
+    contractName:"YourContract",
+    functionName:"delegate",
+  });
+
+  const { data: owner } = useScaffoldReadContract({
+    contractName:"YourContract",
+    functionName:"owner",
+  });
+
+  const { writeContractAsync: writeYourContractAsync } = useScaffoldWriteContract("YourContract");
+    
+  const [newDelegate,setNewDelegate] = useState("");
 
   return (
     <>
       <div className="flex items-center flex-col flex-grow pt-10">
         <div className="px-5">
-          <h1 className="text-center">
+          {/* <h1 className="text-center">
             <span className="block text-2xl mb-2">Welcome to</span>
             <span className="block text-4xl font-bold">Scaffold-ETH 2</span>
-          </h1>
+          </h1> */}
           <div className="flex justify-center items-center space-x-2">
             <p className="my-2 font-medium">Connected Address:</p>
             <Address address={connectedAddress} />
           </div>
-          <p className="text-center text-lg">
+          <div className="flex justify-center items-center space-x-2">
+            <p className="my-2 font-medium">Owner Address:</p>
+            <Address address={owner} />
+          </div>
+          <div className="flex justify-center items-center space-x-2">
+            <p className="my-2 font-medium">Delegate Address:</p>
+            <Address address={delegate} />
+          </div>
+          <div className="flex justify-center items-center space-x-2">
+            <p className="my-2 font-medium">Delegate Address:</p>
+            <AddressInput 
+              value={newDelegate}
+              onChange={(v)=>{
+                setNewDelegate(v);
+            }}
+            />
+          </div>
+          <div className="flex justify-center items-center space-x-2 p-4">
+            <button
+            onClick={async()=>{
+              try {
+                await writeYourContractAsync({
+                  functionName: "setDelegate",
+                  args: [newDelegate],
+                });
+              } catch (e) {
+                console.error("Error setting greeting:", e);
+              }
+            }}
+            className="bg-blue-500 text-white px-4 py-2 rounded-md"
+            >
+              Set Delegate
+            </button>
+          </div>
+          {/* <p className="text-center text-lg">
             Get started by editing{" "}
             <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
               packages/nextjs/app/page.tsx
@@ -61,7 +111,7 @@ const Home: NextPage = () => {
                 tab.
               </p>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

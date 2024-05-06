@@ -2,6 +2,34 @@
 
 ## [Deploying a smart contract app to 🔵 Base with 🏗️ Scaffold-Base in 23min](https://youtu.be/WiqZMtJ1LJw?si=Th2fXL_W740W_wKb)
 
+```shell
+# start scaffold
+git clone https://github.com/scaffold-eth/scaffold-eth-2.git
+cd scaffold-eth-2
+yarn install
+yarn chain # Acount 0 private key: 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+
+yarn start # http://localhost:3000/
+yarn deploy # packages/hardhat/contracts/YourContract.sol
+
+# get an account
+yarn generate
+yarn account
+
+# deploy on the sepolia test-network
+yarn deploy --network sepolia
+
+# verify the contract which has been deployed
+yarn verify --network sepolia # my_contract_address: 0xb0C4A85aF1F6a98B2D6a1BEa39af33bF9FbF0EeF
+
+# deploy front-end on the vercel
+yarn vercel # deploy failed
+yarn vercel:yolo --prod # deploy successfuled
+
+# test address-1: atg.eth
+# test address-2: punk.austingriffith.eth
+```
+
 # 🏗 Scaffold-ETH 2
 
 <h4 align="center">
