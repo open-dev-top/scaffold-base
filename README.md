@@ -1,3 +1,7 @@
+# My notes
+
+## [Deploying a smart contract app to 🔵 Base with 🏗️ Scaffold-Base in 23min](https://youtu.be/WiqZMtJ1LJw?si=Th2fXL_W740W_wKb)
+
 # 🏗 Scaffold-ETH 2
 
 <h4 align="center">
